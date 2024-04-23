@@ -1,0 +1,70 @@
+CREATE DATABASE center_town;
+Use center_town;
+
+
+
+CREATE TABLE setores(
+id_setor INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+andar VARCHAR (150) NOT NULL,
+numero_de_func INT,
+numero_de_salas INT
+);
+
+
+CREATE TABLE visitante (
+id_visitante INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+nome VARCHAR (150) NOT NULL,
+sobrenome VARCHAR (150) NOT NULL,
+email VARCHAR (150) NOT NULL,
+telefone INT,
+data_nasc DATE,
+data_hora_entrada DATETIME,
+data_hora_saida DATETIME,
+rg VARCHAR (150) NOT NULL
+
+);
+CREATE TABLE cargos (
+id_cargos INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+descrição VARCHAR (200) NOT NULL,
+salario_inicial INT,
+nivel_acesso INT,
+beneficios VARCHAR (300),
+data_nasc DATE
+);
+
+
+CREATE TABLE torre (
+id_torre INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+cpf VARCHAR (200) NOT NULL,
+metros_quadrados DOUBLE,
+rua VARCHAR (200),
+bairro VARCHAR (200),
+cidade VARCHAR (200),
+estado VARCHAR (200)
+);
+
+
+CREATE TABLE acesso (
+id_acesso INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+data_hora DATETIME,
+permissao BOOL,
+tipo_acesso VARCHAR (150) NOT NULL,
+id_visitante INT,
+CONSTRAINT id_visitante FOREIGN KEY (id_visitante) REFERENCES visitante (id_visitante)
+);
+
+CREATE TABLE funcionarios(
+id_funcionario INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+nome_func VARCHAR (150) NOT NULL ,
+cpf VARCHAR (40) NOT NULL,
+salario DOUBLE,
+contratado BOOL,
+id_cargos INT,
+id_setor INT,
+id_torre INT,
+id_acesso INT,
+CONSTRAINT id_cargos FOREIGN KEY (id_cargos) references cargos (id_cargos),
+CONSTRAINT id_setor FOREIGN KEY (id_setor) references setores (id_setor),
+CONSTRAINT id_torre FOREIGN KEY (id_torre) references torre (id_torre),
+CONSTRAINT id_acesso FOREIGN KEY (id_acesso) REFERENCES acesso (id_acesso)
+);
